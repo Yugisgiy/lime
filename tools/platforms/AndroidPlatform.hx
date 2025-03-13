@@ -171,9 +171,9 @@ class AndroidPlatform extends PlatformTarget
 
 		for (architecture in architectures)
 		{
-			var minimumSDKVersion = project.config.getInt("android.minimum-sdk-version", 21);
-			var haxeParams = [hxml, "-D", "android", "-D", "PLATFORM=android-" + minimumSDKVersion, "-D", "PLATFORM_NUMBER=" + minimumSDKVersion];
-			var cppParams = ["-Dandroid", "-DPLATFORM=android-" + minimumSDKVersion, "-DPLATFORM_NUMBER=" + minimumSDKVersion];
+			var minSDKVer = project.config.getInt("android.minimum-sdk-version", 21);
+			var haxeParams = [hxml, "-D", "android", "-D", 'PLATFORM_NUMBER=$minSDKVer'];
+			var cppParams = ["-Dandroid", '-DPLATFORM_NUMBER=$minSDKVer'];
 			var path = sourceSet + "/jniLibs/armeabi";
 			var suffix = ".so";
 
@@ -382,7 +382,8 @@ class AndroidPlatform extends PlatformTarget
 
 		var commands = [];
 
-		var minimumSDKVersion = project.config.getInt("android.minimum-sdk-version", 21);
+		var minSDKVer = project.config.getInt("android.minimum-sdk-version", 21);
+		var platformDefine = '-DPLATFORM_NUMBER=$minSDKVer';
 
 		if (project.targetFlags.exists("ONLY_ARMV7"))
 		{
@@ -410,11 +411,11 @@ class AndroidPlatform extends PlatformTarget
 			arm64 = armv7 = x86 = x64 = false;
 		}
 
-		if (arm64) commands.push(["-Dandroid", "-DHXCPP_ARM64", "-DPLATFORM=android-" + minimumSDKVersion, "-DPLATFORM_NUMBER=" + minimumSDKVersion]);
-		if (armv7) commands.push(["-Dandroid", "-DHXCPP_ARMV7", "-DPLATFORM=android-" + minimumSDKVersion, "-DPLATFORM_NUMBER=" + minimumSDKVersion]);
-		if (armv5) commands.push(["-Dandroid", "-DPLATFORM=android-" + minimumSDKVersion, "-DPLATFORM_NUMBER=" + minimumSDKVersion]);
-		if (x64) commands.push(["-Dandroid", "-DHXCPP_X86_64", "-DPLATFORM=android-" + minimumSDKVersion, "-DPLATFORM_NUMBER=" + minimumSDKVersion]);
-		if (x86) commands.push(["-Dandroid", "-DHXCPP_X86", "-DPLATFORM=android-" + minimumSDKVersion, "-DPLATFORM_NUMBER=" + minimumSDKVersion]);
+		if (armv5) commands.push(["-Dandroid", platformDefine]);
+		if (armv7) commands.push(["-Dandroid", "-DHXCPP_ARMV7", platformDefine]);
+		if (arm64) commands.push(["-Dandroid", "-DHXCPP_ARM64", platformDefine]);
+		if (x86) commands.push(["-Dandroid", "-DHXCPP_X86", platformDefine]);
+		if (x64) commands.push(["-Dandroid", "-DHXCPP_X86_64", platformDefine]);
 
 		CPPHelper.rebuild(project, commands);
 	}
