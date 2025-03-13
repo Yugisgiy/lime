@@ -411,11 +411,11 @@ class AndroidPlatform extends PlatformTarget
 			arm64 = armv7 = x86 = x64 = false;
 		}
 
-		if (armv5) commands.push(["-Dandroid", platformDefine]);
-		if (armv7) commands.push(["-Dandroid", "-DHXCPP_ARMV7", platformDefine]);
 		if (arm64) commands.push(["-Dandroid", "-DHXCPP_ARM64", platformDefine]);
-		if (x86) commands.push(["-Dandroid", "-DHXCPP_X86", platformDefine]);
+		if (armv7) commands.push(["-Dandroid", "-DHXCPP_ARMV7", platformDefine]);
+		if (armv5) commands.push(["-Dandroid", platformDefine]);
 		if (x64) commands.push(["-Dandroid", "-DHXCPP_X86_64", platformDefine]);
+		if (x86) commands.push(["-Dandroid", "-DHXCPP_X86", platformDefine]);
 
 		CPPHelper.rebuild(project, commands);
 	}
