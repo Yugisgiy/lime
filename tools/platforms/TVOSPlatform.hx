@@ -244,7 +244,6 @@ class TVOSPlatform extends PlatformTarget
 		valid_archs.push("i386");
 
 		context.VALID_ARCHS = valid_archs.join(" ");
-		context.THUMB_SUPPORT = "";
 
 		var requiredCapabilities = [];
 
