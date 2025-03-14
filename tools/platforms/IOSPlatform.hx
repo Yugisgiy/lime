@@ -772,7 +772,7 @@ class IOSPlatform extends PlatformTarget
 
 		System.mkdir(projectDirectory + "/lib");
 
-		for (archID in 0...6)
+		for (archID in 0...5)
 		{
 			var arch = ["armv7", "armv7s", "arm64", "i386", "x86_64"][archID];
 
@@ -797,6 +797,7 @@ class IOSPlatform extends PlatformTarget
 
 			for (ndll in project.ndlls)
 			{
+				Sys.println(ndll);
 				// if (ndll.haxelib != null) {
 
 				var releaseLib = NDLL.getLibraryPath(ndll, "iPhone", "lib", libExt);
@@ -804,8 +805,12 @@ class IOSPlatform extends PlatformTarget
 				var releaseDest = projectDirectory + "/lib/" + arch + "/lib" + ndll.name + ".a";
 				var debugDest = projectDirectory + "/lib/" + arch + "-debug/lib" + ndll.name + ".a";
 
+				Sys.println(releaseLib);
+				Sys.println(releaseDest);
+
 				if (!FileSystem.exists(releaseLib))
 				{
+					Sys.println("does not exists");
 					releaseLib = NDLL.getLibraryPath(ndll, "iPhone", "lib", ".iphoneos.a");
 					debugLib = NDLL.getLibraryPath(ndll, "iPhone", "lib", ".iphoneos.a", true);
 				}
