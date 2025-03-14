@@ -125,7 +125,7 @@ class Benchs {
 					if( useMSVC )
 						cmd = 'cl.exe /nologo /Ox /I hlc /I ../../src /Fehlc.exe hlc/bench.c ../../Release/libhl.lib';
 					else
-						cmd = '$gcc -O3 ${is32?'-m32':''} -std=c11 -o hlc -I hlc -I ../../src -L ../.. hlc/bench.c -lhl -lm';
+						cmd = '$gcc -O3 ${is32?'-m32':''} -o hlc -I hlc -I ../../src -L ../.. hlc/bench.c -lhl -lm';
 					if( Sys.command(cmd) != 0 ) {
 						Sys.println("Failed to run "+cmd);
 						Sys.println(t.name+" failed to compile");
