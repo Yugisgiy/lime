@@ -115,7 +115,7 @@ class MacPlatform extends PlatformTarget
 		targetArchitecture = Type.createEnum(Architecture, Type.enumConstructor(System.hostArchitecture));
 		for (architecture in project.architectures)
 		{
-			if (architecture.match(X86 | X64 | ARMV6 | ARMV7 | ARM64))
+			if (architecture.match(X86 | X64 | ARMV7 | ARM64))
 			{
 				targetArchitecture = architecture;
 				break;

@@ -19,8 +19,6 @@ class CSHelper
 	{
 		var name = switch (arch)
 		{
-			case ARMV5:
-				"armeabi";
 			case ARMV7:
 				"armeabi-v7a";
 			case ARM64:

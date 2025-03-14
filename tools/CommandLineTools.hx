@@ -591,20 +591,8 @@ class CommandLineTools
 				case ANDROID:
 					platform = new AndroidPlatform(command, project, targetFlags);
 
-				case BLACKBERRY:
-
-				// platform = new BlackBerryPlatform (command, project, targetFlags);
-
 				case IOS:
 					platform = new IOSPlatform(command, project, targetFlags);
-
-				case TIZEN:
-
-				// platform = new TizenPlatform (command, project, targetFlags);
-
-				case WEBOS:
-
-				// platform = new WebOSPlatform (command, project, targetFlags);
 
 				case WINDOWS:
 					platform = new WindowsPlatform(command, project, targetFlags);
@@ -918,15 +906,12 @@ class CommandLineTools
 			Log.println("");
 			Log.println("  \x1b[1mair\x1b[0m -- Create an AIR application");
 			Log.println("  \x1b[1mandroid\x1b[0m -- Create an Android application");
-			// Log.println ("  \x1b[1mblackberry\x1b[0m -- Create a BlackBerry application");
 			Log.println("  \x1b[1mflash\x1b[0m -- Create a Flash SWF application");
 			Log.println("  \x1b[1mhtml5\x1b[0m -- Create an HTML5 application");
 			Log.println("  \x1b[1mios\x1b[0m -- Create an iOS application");
 			Log.println("  \x1b[1mlinux\x1b[0m -- Create a Linux application");
 			Log.println("  \x1b[1mmac\x1b[0m -- Create a macOS application");
-			// Log.println ("  \x1b[1mtizen\x1b[0m -- Create a Tizen application");
 			Log.println("  \x1b[1mtvos\x1b[0m -- Create a tvOS application");
-			// Log.println ("  \x1b[1mwebos\x1b[0m -- Create a webOS application");
 			Log.println("  \x1b[1mwebassembly\x1b[0m -- Create a WebAssembly application");
 			Log.println("  \x1b[1mwindows\x1b[0m -- Create a Windows application");
 
@@ -1009,7 +994,6 @@ class CommandLineTools
 			Log.println("  \x1b[3m(windows|mac|linux|android)\x1b[0m \x1b[1m-static\x1b[0m -- Compile as a static C++ executable");
 			Log.println("  \x1b[3m(windows|mac|linux)\x1b[0m \x1b[1m-x86_32\x1b[0m -- Compile for x86_32 instead of the OS default");
 			Log.println("  \x1b[3m(windows|mac|linux)\x1b[0m \x1b[1m-x86_64\x1b[0m -- Compile for x86_64 instead of the OS default");
-			Log.println("  \x1b[3m(ios|android)\x1b[0m \x1b[1m-armv6\x1b[0m -- Compile for ARMv6 instead of the OS defaults");
 			Log.println("  \x1b[3m(ios|android)\x1b[0m \x1b[1m-armv7\x1b[0m -- Compile for ARMv7 instead of the OS defaults");
 			Log.println("  \x1b[3m(ios|android)\x1b[0m \x1b[1m-armv7s\x1b[0m -- Compile for ARMv7s instead of the OS defaults");
 			Log.println("  \x1b[3m(mac|ios|android)\x1b[0m \x1b[1m-arm64\x1b[0m -- Compile for ARM64 instead of the OS defaults");
@@ -1028,7 +1012,7 @@ class CommandLineTools
 				Log.println("  \x1b[3m(ios)\x1b[0m \x1b[1m-xcode\x1b[0m -- Launch the generated Xcode project");
 			}
 
-			// Log.println ("  \x1b[3m(ios|blackberry|tizen|tvos|webos)\x1b[0m \x1b[1m-simulator\x1b[0m -- Target the device simulator");
+			// Log.println ("  \x1b[3m(ios|tvos)\x1b[0m \x1b[1m-simulator\x1b[0m -- Target the device simulator");
 			Log.println("  \x1b[3m(ios|tvos)\x1b[0m \x1b[1m-simulator\x1b[0m -- Target the device simulator");
 			Log.println("  \x1b[3m(ios)\x1b[0m \x1b[1m-simulator -ipad\x1b[0m -- Build/test for the iPad Simulator");
 			Log.println("  \x1b[3m(android)\x1b[0m \x1b[1m-emulator\x1b[0m -- Target the device emulator");

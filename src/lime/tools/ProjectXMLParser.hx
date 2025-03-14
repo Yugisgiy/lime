@@ -1784,17 +1784,8 @@ class ProjectXMLParser extends HXProject
 
 						switch (binaries)
 						{
-							case "fat":
-								ArrayTools.addUnique(architectures, Architecture.ARMV6);
+							case "armv7" | "fat":
 								ArrayTools.addUnique(architectures, Architecture.ARMV7);
-
-							case "armv6":
-								ArrayTools.addUnique(architectures, Architecture.ARMV6);
-								architectures.remove(Architecture.ARMV7);
-
-							case "armv7":
-								ArrayTools.addUnique(architectures, Architecture.ARMV7);
-								architectures.remove(Architecture.ARMV6);
 						}
 					}
 
