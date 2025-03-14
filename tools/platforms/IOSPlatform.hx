@@ -805,12 +805,8 @@ class IOSPlatform extends PlatformTarget
 				var releaseDest = projectDirectory + "/lib/" + arch + "/lib" + ndll.name + ".a";
 				var debugDest = projectDirectory + "/lib/" + arch + "-debug/lib" + ndll.name + ".a";
 
-				Sys.println(releaseLib);
-				Sys.println(releaseDest);
-
 				if (!FileSystem.exists(releaseLib))
 				{
-					Sys.println("does not exists");
 					releaseLib = NDLL.getLibraryPath(ndll, "iPhone", "lib", ".iphoneos.a");
 					debugLib = NDLL.getLibraryPath(ndll, "iPhone", "lib", ".iphoneos.a", true);
 				}
