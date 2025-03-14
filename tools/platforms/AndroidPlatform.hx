@@ -382,7 +382,7 @@ class AndroidPlatform extends PlatformTarget
 
 		var commands = [];
 
-		var minSDKVer = project.config.getInt("android.minimum-sdk-version", 21);
+		var minSDKVer = 21;
 		var platformDefine = '-DPLATFORM_NUMBER=$minSDKVer';
 
 		if (project.targetFlags.exists("ONLY_ARMV7"))
