@@ -369,7 +369,7 @@ class WindowsPlatform extends PlatformTarget
 					var command:Array<String> = null;
 					if (project.targetFlags.exists("gcc"))
 					{
-						command = ["gcc", "-O3", "-o", executablePath, "-std=c11", "-Wl,-subsystem,windows", "-I", Path.combine(targetDirectory, "obj"), Path.combine(targetDirectory, "obj/ApplicationMain.c"), "C:/Windows/System32/dbghelp.dll"];
+						command = ["gcc", "-O3", "-o", executablePath, "-Wl,-subsystem,windows", "-I", Path.combine(targetDirectory, "obj"), Path.combine(targetDirectory, "obj/ApplicationMain.c"), "C:/Windows/System32/dbghelp.dll"];
 						for (file in System.readDirectory(applicationDirectory))
 						{
 							switch Path.extension(file)
