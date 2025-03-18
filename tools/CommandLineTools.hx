@@ -2231,17 +2231,9 @@ class CommandLineTools
 				{
 					if (argument.substr(0, 4) == "-arm")
 					{
-						try
-						{
-							var name = argument.substr(1).toUpperCase();
-							var value = Type.createEnum(Architecture, name);
-
-							if (value != null)
-							{
-								overrides.architectures.push(value);
-							}
-						}
-						catch (e:Dynamic) {}
+						var value = new Architecture(argument.substr(1));
+						if (value != null)
+							overrides.architectures.push(value);
 					}
 					else if (argument == "-64" || argument == "-x86_64")
 					{
