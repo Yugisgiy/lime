@@ -62,7 +62,7 @@ class NativeApplication
 
 	public var handle:Dynamic;
 
-	#if android
+	#if (android && !macro)
 	private var deviceOrientationListener:OrientationChangeListener;
 	#end
 
@@ -89,7 +89,7 @@ class NativeApplication
 		Sensor.registerSensor(SensorType.ACCELEROMETER, 0);
 		#end
 
-		#if android
+		#if (android && !macro)
 		var setDeviceOrientationListener = JNI.createStaticMethod("org/haxe/lime/GameActivity", "setDeviceOrientationListener",
 			"(Lorg/haxe/lime/HaxeObject;)V");
 		deviceOrientationListener = new OrientationChangeListener(handleJNIOrientationEvent);
@@ -393,7 +393,7 @@ class NativeApplication
 		}
 	}
 
-	#if android
+	#if (android && !macro)
 	private function handleJNIOrientationEvent(newOrientation:Int):Void
 	{
 		var orientation:Orientation = cast newOrientation;
@@ -1052,7 +1052,7 @@ class NativeApplication
 	var DEVICE_ORIENTATION_CHANGE = 1;
 }
 
-#if android
+#if (android && !macro)
 private class OrientationChangeListener implements JNISafety
 {
 	private var callback:Int->Void;
