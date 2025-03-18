@@ -60,6 +60,10 @@ class HTML5Helper
 			{
 				suffix += "32";
 			}
+			else if (System.hostArchitecture == ARMV7)
+			{
+				suffix += "arm";
+			}
 			else if (System.hostArchitecture == ARM64)
 			{
 				suffix += "arm64";
@@ -97,44 +101,10 @@ class HTML5Helper
 		}
 		else
 		{
-			var suffix = switch (System.hostPlatform)
-			{
-				case WINDOWS: "-windows.exe";
-				case MAC: "-mac";
-				case LINUX: "-linux";
-				default: return;
-			}
-
-			if (suffix == "-linux")
-			{
-				if (System.hostArchitecture == X86)
-				{
-					suffix += "32";
-				}
-				else if( System.hostArchitecture == ARMV7)
-				{
-					suffix += "arm";
-				}
-				else if (System.hostArchitecture == ARM64)
-				{
-					suffix += "arm64";
-				}
-				else
-				{
-					suffix += "64";
-				}
-			}
-
 			var templatePaths = [
 				Path.combine(Haxelib.getPath(new Haxelib(#if lime "lime" #else "hxp" #end)), #if lime "templates" #else "" #end)
 			].concat(project.templatePaths);
-			var node = System.findTemplate(templatePaths, "bin/node/node" + suffix);
 			var server = System.findTemplate(templatePaths, "bin/node/http-server/bin/http-server");
-
-			if (System.hostPlatform != WINDOWS)
-			{
-				Sys.command("chmod", ["+x", node]);
-			}
 
 			var args = [server, path, "-c-1", "--cors"];
 
@@ -164,7 +134,7 @@ class HTML5Helper
 				args.push("--silent");
 			}
 
-			System.runCommand("", node, args);
+			System.runCommand("", "node", args);
 		}
 	}
 
@@ -178,41 +148,12 @@ class HTML5Helper
 			{
 				var executable = "npx";
 				var terser = "terser";
-				if (!project.targetFlags.exists("npx")) {
-					var suffix = switch (System.hostPlatform)
-					{
-						case WINDOWS: "-windows.exe";
-						case MAC: "-mac";
-						case LINUX: "-linux";
-						default: return false;
-					}
-
-					if (suffix == "-linux")
-					{
-						if (System.hostArchitecture == X86)
-						{
-							suffix += "32";
-						}
-						else if (System.hostArchitecture == ARM64)
-						{
-							suffix += "arm64";
-						}
-						else
-						{
-							suffix += "64";
-						}
-					}
-
+				if (!project.targetFlags.exists("npx"))
+				{
 					var templatePaths = [
 						Path.combine(Haxelib.getPath(new Haxelib(#if lime "lime" #else "hxp" #end)), #if lime "templates" #else "" #end)
 					].concat(project.templatePaths);
-					executable = System.findTemplate(templatePaths, "bin/node/node" + suffix);
 					terser = System.findTemplate(templatePaths, "bin/node/terser/bin/terser");
-
-					if (System.hostPlatform != WINDOWS)
-					{
-						Sys.command("chmod", ["+x", executable]);
-					}
 				}
 
 				var args = [
@@ -230,7 +171,7 @@ class HTML5Helper
 					args.push('content=\'${sourceFile}.map\'');
 				}
 
-				System.runCommand("", executable, args);
+				System.runCommand("", "node", args);
 			}
 			else if (project.targetFlags.exists("yui"))
 			{
