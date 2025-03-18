@@ -388,7 +388,7 @@ class FileDialog #if android implements JNISafety #end
 		buffer = buffer.slice(0, (data : Bytes).length);
 
 		#if commonjs
-		untyped #if haxe4 js.Syntax.code #else __js__ #end ("require ('file-saver')")(new Blob([buffer], {type: type}), path, true);
+		untyped js.Syntax.code("require ('file-saver')")(new Blob([buffer], {type: type}), path, true);
 		#else
 		untyped window.saveAs(new Blob([buffer], {type: type}), path, true);
 		#end
