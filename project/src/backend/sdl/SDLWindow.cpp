@@ -1132,6 +1132,14 @@ namespace lime {
 
 	}
 
+	bool SDLWindow::SetVSync (bool vsync) {
+
+		SDL_GL_SetSwapInterval(vsync ? 1 : 0);
+ 
+		return vsync;
+
+	}
+
 
 	void SDLWindow::WarpMouse (int x, int y) {
 
