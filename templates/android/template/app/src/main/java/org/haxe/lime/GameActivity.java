@@ -43,8 +43,8 @@ public class GameActivity extends SDLActivity {
 
 
 	private static AudioManager audioManager;
-    private static AudioFocusRequest audioFocusRequest;
-    private static AudioManager.OnAudioFocusChangeListener afChangeListener;
+	private static AudioFocusRequest audioFocusRequest;
+	private static AudioManager.OnAudioFocusChangeListener afChangeListener;
 	private static AssetManager assetManager;
 	private static List<Extension> extensions;
 	// TODO: Handle the rest of the callbacks for filedialogs?
@@ -233,33 +233,33 @@ public class GameActivity extends SDLActivity {
 		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
 		afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
-            @Override
-            public void onAudioFocusChange(int focusChange) {
-                switch (focusChange) {
-                    case AudioManager.AUDIOFOCUS_GAIN:
-                        break;
-                    case AudioManager.AUDIOFOCUS_LOSS:
-                        break;
-                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                        break;
-                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                        break;
-                }
-            }
-        };
+			@Override
+			public void onAudioFocusChange(int focusChange) {
+				switch (focusChange) {
+					case AudioManager.AUDIOFOCUS_GAIN:
+						break;
+					case AudioManager.AUDIOFOCUS_LOSS:
+						break;
+					case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+						break;
+					case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+						break;
+				}
+			}
+		};
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_GAME)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build();
+			AudioAttributes audioAttributes = new AudioAttributes.Builder()
+					.setUsage(AudioAttributes.USAGE_GAME)
+					.setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+					.build();
 
-            audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
-                    .setAudioAttributes(audioAttributes)
-                    .setOnAudioFocusChangeListener(afChangeListener)
-                    .setAcceptsDelayedFocusGain(true)
-                    .build();
-        }
+			audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+					.setAudioAttributes(audioAttributes)
+					.setOnAudioFocusChangeListener(afChangeListener)
+					.setAcceptsDelayedFocusGain(true)
+					.build();
+		}
 
 		assetManager = getAssets ();
 
@@ -428,17 +428,17 @@ public class GameActivity extends SDLActivity {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            audioManager.requestAudioFocus(audioFocusRequest);
+			audioManager.requestAudioFocus(audioFocusRequest);
 
-        } else {
+		} else {
 
-            audioManager.requestAudioFocus(
-                afChangeListener,
-                AudioManager.STREAM_MUSIC,
-                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT
-            );
+			audioManager.requestAudioFocus(
+				afChangeListener,
+				AudioManager.STREAM_MUSIC,
+				AudioManager.AUDIOFOCUS_GAIN_TRANSIENT
+			);
 
-        }
+		}
 
 		for (Extension extension : extensions) {
 
@@ -493,14 +493,14 @@ public class GameActivity extends SDLActivity {
 		super.onStop ();
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-	
-            audioManager.abandonAudioFocusRequest(audioFocusRequest);
 
-        } else {
+			audioManager.abandonAudioFocusRequest(audioFocusRequest);
 
-            audioManager.abandonAudioFocus(afChangeListener);
+		} else {
 
-        }
+			audioManager.abandonAudioFocus(afChangeListener);
+
+		}
 
 		for (Extension extension : extensions) {
 
