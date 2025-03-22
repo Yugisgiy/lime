@@ -388,6 +388,49 @@ static UIImage *SDL_LoadLaunchImageNamed(NSString *name, int screenh)
     }];
 }
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+   AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+   NSError *error = nil;
+
+   [audioSession setCategory:AVAudioSessionCategoryPlayback error:&error];
+
+   [audioSession setActive:YES error:&error];
+
+   if (error) {
+      NSLog(@"Error setting up audio session: %@", error.localizedDescription);
+   }
+
+   return YES;
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+   AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+   NSError *error = nil;
+
+   [audioSession setCategory:AVAudioSessionCategoryPlayback error:&error];
+
+   [audioSession setActive:YES error:&error];
+
+   if (error) {
+      NSLog(@"Error activating audio session on foreground: %@", error.localizedDescription);
+   }
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+   AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+   NSError *error = nil;
+
+   [audioSession setCategory:AVAudioSessionCategoryPlayback
+      withOptions:AVAudioSessionCategoryOptionMixWithOthers
+            error:&error];
+
+   [audioSession setActive:YES error:&error];
+
+   if (error) {
+      NSLog(@"Error activating audio session on background: %@", error.localizedDescription);
+   }
+}
+
 - (void)postFinishLaunch
 {
     /* Hide the launch screen the next time the run loop is run. SDL apps will

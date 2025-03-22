@@ -2,6 +2,9 @@ package org.haxe.lime;
 
 
 import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -39,6 +42,9 @@ import java.util.List;
 public class GameActivity extends SDLActivity {
 
 
+	private static AudioManager audioManager;
+    private static AudioFocusRequest audioFocusRequest;
+    private static AudioManager.OnAudioFocusChangeListener afChangeListener;
 	private static AssetManager assetManager;
 	private static List<Extension> extensions;
 	// TODO: Handle the rest of the callbacks for filedialogs?
@@ -224,6 +230,37 @@ public class GameActivity extends SDLActivity {
 
 		};
 
+		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+		afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+            @Override
+            public void onAudioFocusChange(int focusChange) {
+                switch (focusChange) {
+                    case AudioManager.AUDIOFOCUS_GAIN:
+                        break;
+                    case AudioManager.AUDIOFOCUS_LOSS:
+                        break;
+                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                        break;
+                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                        break;
+                }
+            }
+        };
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build();
+
+            audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+                    .setAudioAttributes(audioAttributes)
+                    .setOnAudioFocusChangeListener(afChangeListener)
+                    .setAcceptsDelayedFocusGain(true)
+                    .build();
+        }
+
 		assetManager = getAssets ();
 
 		if (checkSelfPermission(Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
@@ -389,6 +426,20 @@ public class GameActivity extends SDLActivity {
 
 		orientationListener.enable();
 
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            audioManager.requestAudioFocus(audioFocusRequest);
+
+        } else {
+
+            audioManager.requestAudioFocus(
+                afChangeListener,
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT
+            );
+
+        }
+
 		for (Extension extension : extensions) {
 
 			extension.onResume ();
@@ -440,6 +491,16 @@ public class GameActivity extends SDLActivity {
 	@Override protected void onStop () {
 
 		super.onStop ();
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+	
+            audioManager.abandonAudioFocusRequest(audioFocusRequest);
+
+        } else {
+
+            audioManager.abandonAudioFocus(afChangeListener);
+
+        }
 
 		for (Extension extension : extensions) {
 
