@@ -155,7 +155,6 @@ class Window
 				"mouseLock": {get: p.get_mouseLock, set: p.set_mouseLock},
 				"resizable": {get: p.get_resizable, set: p.set_resizable},
 				"scale": {get: p.get_scale},
-				"vsync": {get: p.get_vsync, set: p.set_vsync},
 				"textInputEnabled": {get: p.get_textInputEnabled, set: p.set_textInputEnabled},
 				"title": {get: p.get_title, set: p.set_title},
 				"visible": {get: p.get_visible, set: p.set_visible},
